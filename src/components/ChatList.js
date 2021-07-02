@@ -39,6 +39,7 @@ const ChatList = ({data, phone}) => {
 
 const styles = StyleSheet.create({
   flatlistCom:{
+    asdasd
     flexDirection:'row',
     width:Dimensions.get('screen').width,
   },
