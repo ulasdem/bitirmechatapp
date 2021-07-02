@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     width:Dimensions.get('screen').width,
   },
-
+aaa
   itemContainer:{
     width:Dimensions.get('screen').width-10,
     //paddingVertical:30,
