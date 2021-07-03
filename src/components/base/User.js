@@ -1,4 +1,4 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, StyleSheet} from 'react-native';
 import React from 'react';
 import definitions from '../../styles/definitions';
 import gStyles from '../../styles/gStyles';
@@ -9,30 +9,30 @@ export default ({user, photoSize}) => {
   return (
     <View style={[gStyles.flex, gStyles.row]}>
       <View>
-        <Image
-          source={{
-            uri: 'https://klimbim2014.files.wordpress.com/2018/01/atatuerk-bw.jpg',
-          }}
-          style={{
-            height: photoSize,
-            width: photoSize,
-            borderRadius: definitions.button.radius,
-          }}
-        />
+        <Image source={{uri: user.photoUrl,}} style={styles.image}/>
       </View>
       <View style={gStyles.profileInfo}>
-        <Text style={{color: theme.colors.text}}>{user.name}</Text>
-        {user.message && (
-          <Text style={{color: theme.colors.text}}>{user.message}</Text>
-        )}
+        <Text style={styles.name}>{user?.name}</Text>
+        <Text style={styles.status}>{user?.status}</Text>
       </View>
-      {user.messageDate && (
-        <View style={gStyles.messageSentTime}>
-          <Text style={[gStyles.messageTimeText, {color: theme.colors.text}]}>
-            {user.messageDate}
-          </Text>
-        </View>
-      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  image:{
+    width:70,
+    height:70,
+    borderRadius:35
+  },
+  name:{
+    color:'#333',
+    fontFamily:'GoogleSans-Medium',
+    fontSize:16
+  },
+  status:{
+    color:'#333',
+    fontFamily:'GoogleSans-Regular',
+    fontSize:14
+  }
+})

@@ -34,8 +34,7 @@ const ChatScreen = ({navigation, route}) => {
   const {item}=route.params;
   const {phone}=route.params;
   const [mesaj, setMesajlar] = useState([]);
-  const [gonderilenMesaj, setGonderilenMesaj]=useState("");
-  const [deneme, setdeneme] = useState(false)
+  const [gonderilenMesaj, setGonderilenMesaj]=useState();
 
 
  useEffect(() => {
@@ -142,14 +141,7 @@ const LastMessage = (itemone,itemtwo)=>{
 }
 useEffect(() => {
   scrollView.scrollToEnd({ animated: true });
-  setTimeout(() => {
-    scrollView.scrollToEnd({ animated: true });
-   }, 100);
 }, [mesaj])
-
-useEffect(() => {
-
-}, [deneme])
 
 
 

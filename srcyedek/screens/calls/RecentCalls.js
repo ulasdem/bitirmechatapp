@@ -35,8 +35,8 @@ const SecondRoute = () => <ServicesScreen />;
 const CallScreen = (props) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'Tüm Aramalar'},
-    {key: 'second', title: 'Cevapsız Aramalar'},
+    {key: 'first', title: 'All'},
+    {key: 'second', title: 'Missed'},
   ]);
   const renderScene = SceneMap({
     first: FirstRoute,

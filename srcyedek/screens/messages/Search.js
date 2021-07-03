@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react'
-import { View,StatusBar, Text, TextInput, TouchableOpacity,StyleSheet, Alert, Dimensions, SafeAreaView } from 'react-native'
+import { View,StatusBar, Text, TextInput, TouchableOpacity,StyleSheet, Alert, Dimensions } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import  {useNavigation} from '@react-navigation/native'
 
@@ -85,14 +85,14 @@ export default function Search({phone,userInfo}) {
     return (
         <View style={styles.container} >
            <StatusBar backgroundColor={'#118ab2'} />
-           <SafeAreaView/>
-             <TextInput
+      <TextInput
                 value={createMessage}
                 onChangeText={(text)=>setCreateMessage(text)}
                 style={styles.textInput}
                 keyboardType={'number-pad'}
                 placeholder='Telefon numarası ile ara'
             />
+
       <TouchableOpacity style={styles.submitButton} onPress={()=>getUser()}>
               <Text style={{color:'#fff'}} >{'Araa'}
               </Text>

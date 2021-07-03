@@ -10,13 +10,14 @@ const styles = StyleSheet.create({
     fontSize: 23,
     color: Colors.green,
     marginBottom: 15,
-    fontFamily: 'GoogleSans-Bold',
+    fontWeight: 'bold',
+    fontFamily: 'moreo',
     textAlign: 'center',
   },
   subText: {
     fontSize: 22,
     letterSpacing: 0.3,
-    fontFamily: 'GoogleSans-Bold',
+    fontFamily: 'moreo',
     textAlign: 'center',
     lineHeight: 32,
   },
@@ -37,9 +38,10 @@ export const ServicesScreen = () => {
         },
       ]}>
         <StatusBar backgroundColor={'#118ab2'} />
+      <Text style={styles.mainText}>ha bura kalkacak</Text>
       <View style={gStyles.row}>
         <Text style={[styles.subText, {color: theme.colors.text}]}>
-          {'Burada hiç arama\n görünmüyor'}
+          {'To discover new\n services, tap'}
           <View style={styles.navigateIcon}>
             <Icon
               name={'md-navigate-circle-outline'}
@@ -47,7 +49,7 @@ export const ServicesScreen = () => {
               color={Colors.green}
             />
           </View>
-          arama yapmak için hemen başlayın
+          icon and select a service.
         </Text>
       </View>
     </View>

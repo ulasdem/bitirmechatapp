@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, Alert,SafeAreaView, Pressable, Image } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Alert } from 'react-native'
 import React,{useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
@@ -6,33 +6,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function ContactList({onClick}) {
+
+export default function ContactList() {
+
   const [userInfo,setUserInfo]=useState()
   const [trigger,setTrigger]=useState(true)
-  const [data, setData]= useState([]);
-  const [createMessage, setCreateMessage]=useState();
-  const navigation = useNavigation();
-  const[data2,setData2]=useState()
  
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      headerTitle: () => <Text style={{color:'#fff', fontFamily:'GoogleSans-Regular', fontSize:16}} >Yeni mesaj Oluştur</Text>,
-      headerStyle: {
-        shadowRadius: 0,
-        shadowOffset: {height:0},
-        elevation:0,
-      },
-      headerTintColor: "#4B5563",
-      headerLeft: () => (
-        <Pressable style={{ paddingHorizontal: 12 }} onPress={() => navigation.goBack()}>
-          <Icon name="chevron-back-outline" size={30} color={'#fff'} />
-        </Pressable>
-      ),
-     
-    })
-  }, [navigation])
-
   useEffect (()=>{
       AsyncStorage.getItem('phoneNumber').then(value =>{
           if(value!==null){
@@ -42,17 +21,18 @@ export default function ContactList({onClick}) {
           }else{               
               setTrigger(false)
               console.log("astnc:" , value)
+
           }
       })
   },[trigger]);
 
 const getUserInfo=(phoneNumber)=>{
+
   try {
       
       firestore()
       .collection('userList')
       .doc(phoneNumber)
-      
       .get()
       .then(documentSnapshot => {
         console.log('User exists: ', documentSnapshot.exists);
@@ -63,16 +43,21 @@ const getUserInfo=(phoneNumber)=>{
           //setAuth();
         }
       });
+alert(JSON.stringify(userInfo))
   } catch (error) {
       alert(error)
       setTrigger(false)
   }
+
+
 }
 
+
+
+const[data2,setData2]=useState()
   useEffect(() => {
     firestore()
     .collection('userList')
-    .orderBy('name', 'asc')
     .onSnapshot((querySnapshot) => {
       const users = [];
       querySnapshot.forEach((documentSnapshot) => {
@@ -86,7 +71,15 @@ const getUserInfo=(phoneNumber)=>{
     });
   }, []);
 
+
+
+   
+    const [data, setData]= useState([]);
+    const [createMessage, setCreateMessage]=useState();
+    const navigation = useNavigation();
+   
     const getUser = (phoneNumber) =>{
+      Alert.alert(phoneNumber)
         if(phoneNumber?.length===11){
             try {
             firestore()
@@ -113,6 +106,7 @@ const getUserInfo=(phoneNumber)=>{
     }
 
     const isMessageValue = (item) =>{
+     
         firestore()
         .collection('messageList')
         .doc(userInfo.phoneNumber)
@@ -123,7 +117,7 @@ const getUserInfo=(phoneNumber)=>{
           console.log('User exists: ', documentSnapshot.exists);
       
           if (documentSnapshot.exists) {
-            navigation.replace('Chat', {phone:userInfo.phoneNumber, item:item})
+            navigation.push('Chat', {phone:userInfo.phoneNumber, item:item})
           }else{
             firestore()
             .collection('messageList')
@@ -133,13 +127,14 @@ const getUserInfo=(phoneNumber)=>{
             .set({
                 phoneNumber:item.phoneNumber,
                 name:item.name,
-                photoUrl:item.photoUrl,
                 date: firestore.FieldValue.serverTimestamp(),
                 lastMessage:""
             })
             .then(() => {
               console.log('oldu basarili');
             });
+
+
 
             firestore()
             .collection('messageList')
@@ -149,13 +144,12 @@ const getUserInfo=(phoneNumber)=>{
             .set({
                 phoneNumber:userInfo.phoneNumber,
                 name:userInfo.name,
-                photoUrl:userInfo.photoUrl,
                 date: firestore.FieldValue.serverTimestamp(),
                 lastMessage:""
             })
             .then(() => {
               console.log('oldu basarili');
-              navigation.replace('Chat', {phone:userInfo.phoneNumber, item:item})
+              navigation.push('Chat', {phone:userInfo.phoneNumber, item:item})
             });
           }
         });
@@ -165,34 +159,29 @@ const getUserInfo=(phoneNumber)=>{
 
 
   return (
-    <SafeAreaView>
-        <FlatList
+    <View>
+    <FlatList
             data={data2}
             inverted={false}
             style={styles.flatlistCom}
             horizontal={false}
-            style={{height:Dimensions.get('screen').height-150}}
+            style={{flex:1}}
             renderItem={({item})=>(
-              <TouchableOpacity style={styles.container} onPress={()=>getUser(item.phoneNumber)}>
-                <View>
-                  {item?.photoUrl
-                  
-                  ? <Image
-                      style={styles.image}
-                      source={{uri :item.photoUrl}}
-                    />
-                :<Icon name="person-circle-outline" size={50} color={'#555'}/>
-                }
-                </View>
-                <View>
-                  <Text style={styles.text} > {item.name} </Text>
-                  <Text style={styles.text2} > {item.status} </Text>
-                </View>
-              </TouchableOpacity>
+            
+            <TouchableOpacity style={styles.container} onPress={()=>getUser(item.phoneNumber)}>
+              <View>
+                <Icon name="person-circle-outline" size={40} color={'#555'} />
+              </View>
+              <View>
+                <Text style={styles.text} > {item.name} </Text>
+                <Text style={styles.text2} > {item.status} </Text>
+              </View>
+             </TouchableOpacity>
+               
             )}
     />
 
-    </SafeAreaView>
+    </View>
   )
 }
 
@@ -222,11 +211,6 @@ const styles = StyleSheet.create({
       width:Dimensions.get('screen').width-50,
       fontSize:10,
       color:'#888'
-    },
-    image:{
-      width:50,
-      height:50,
-      borderRadius:25
-    },
+    }
 
 });

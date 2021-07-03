@@ -7,10 +7,6 @@ import definitions from '../styles/definitions';
 import gStyles from '../styles/gStyles';
 import {Press, User} from './base';
 
-import moment from 'moment'
-import 'moment/locale/tr'  
-moment.locale('tr')
-
 const ChatList = ({data, phone}) => {
   const navigation = useNavigation();
 
@@ -28,12 +24,11 @@ const ChatList = ({data, phone}) => {
           <TouchableOpacity onPress={()=>nameView(item)} activeOpacity={0.7} style={styles.itemContainer}>
             <Image
               style={styles.image}
-              source={{uri :item.photoUrl}}
+              source={{uri : 'https://klimbim2014.files.wordpress.com/2018/01/atatuerk-bw.jpg'}}
             />
             <View style={{padding:10,}}>
               <Text style={styles.text}>{item.name}</Text>
-              <Text style={[styles.text, {fontSize:10,color:'#555'}]}>{item.date && moment(item.date.toDate()).startOf('minute').fromNow()}</Text>
-              <Text numberOfLines={1} style={[styles.text, {fontSize:12,color:'#333'}]}>{item.lastMessage}</Text>
+              <Text style={[styles.text, {fontSize:10,color:'#555'}]}>{item.lastMessage}</Text>
             </View>
           </TouchableOpacity>
         )}

@@ -40,7 +40,7 @@ export default function LoginScreen({navigation,route}) {
           console.log('User exists: ', documentSnapshot.exists);
           if (documentSnapshot.exists) {
             isuserlogin()
-            navigation.replace('Home', {phone:phoneNumber,userInfo:documentSnapshot.data()})
+            navigation.push('Home', {phone:phoneNumber,userInfo:documentSnapshot.data()})
           }else{
             setAuth();
           }
@@ -81,9 +81,6 @@ export default function LoginScreen({navigation,route}) {
                 keyboardType={'number-pad'}
                 placeholder={' Telefon numaranızı giriniz.'}
             />
-
-        
-
             <TouchableOpacity style={styles.button}  onPress={()=>UserControl()}>
                 <Text style={styles.buttonText} >
                 Başlat

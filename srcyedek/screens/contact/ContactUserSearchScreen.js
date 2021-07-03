@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, SafeAreaView} from 'react-native';
+import {Text, View} from 'react-native';
 import {Information} from '../../components/base';
 import ContactList from '../../components/ContactList';
 import gStyles from '../../styles/gStyles';
@@ -75,15 +75,15 @@ export class ContactUserSearchScreen extends React.Component {
     const {props, state} = this;
     const {contact, searchTerm} = state;
     return (
-      <SafeAreaView style={[gStyles.flexCenter]}>
+      <View style={[gStyles.flexCenter]}>
         {contact.length > 0 ? (
-          <ContactList />
+          <ContactList list={contact} />
         ) : (
           <Information
             text={"No results found for '" + searchTerm.toString() + "'"}
           />
         )}
-      </SafeAreaView>
+      </View>
     );
   }
 }

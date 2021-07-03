@@ -11,13 +11,15 @@ export default function EntryScreen({navigation,route}) {
             if(value!==null){
                 getUserInfo(value)
             }else{               
-                navigation.replace('Login')
+                navigation.push('Login')
             }
         })
     },[trigger]);
 
 const getUserInfo=(phoneNumber)=>{
+
     try {
+        
         firestore()
         .collection('userList')
         .doc(phoneNumber)
@@ -25,16 +27,19 @@ const getUserInfo=(phoneNumber)=>{
         .then(documentSnapshot => {
           console.log('User exists: ', documentSnapshot.exists);
           if (documentSnapshot.exists) {
-            navigation.replace('Home', {phone:phoneNumber,userInfo:documentSnapshot.data()})
+            navigation.push('Home', {phone:phoneNumber,userInfo:documentSnapshot.data()})
           }else{
             setAuth();
             alert('setAuth')
           }
         });
+
     } catch (error) {
         console.log(error)
         setTrigger(false)
     }
+
+
 }
 
     return (

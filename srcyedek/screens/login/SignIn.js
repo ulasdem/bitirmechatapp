@@ -11,8 +11,6 @@ import gStyles from '../../styles/gStyles';
 export default function SignIn({navigation,route}) {
 
     const [name, setName]=useState()
-    const [username, setUsername] = useState()
-    const [photoUrl, setPhotoUrl] = useState()
     const [authCodeInput, setAuthCodeInput]=useState()
     const {phone}=route.params;
     const {authCode}=route.params;
@@ -27,94 +25,85 @@ export default function SignIn({navigation,route}) {
     }
 
     const Login=()=>{
-        if(name?.length>1) {
-            if(username?.length>5){
-                if(photoUrl?.indexOf("http")!==-1){
-                    try {
-                        firestore()
-                        .collection('userList')
-                        .doc(phone)
-                        .set({
-                            phoneNumber:phone,
-                            name:name,
-                            username:username,
-                            photoUrl:photoUrl,
-                            sendDate: firestore.FieldValue.serverTimestamp(),
-                            status:'Konuşamam, yalnızca UUDChat'
-                        })
-                        .then(() => {
-                        AsyncStorage.setItem('phoneNumber',phone)
-                        console.log('kayit basarili');
-                        Alert.alert('Basarili', 'Anasayfaya Yonlendiriliyorsunuz')
-                        setTimeout(() => {
-                            navigation.push('Home', {phone:phone})
-                        }, 1000);
-                        });
-                    } catch (error) {Alert.alert('Hata', 'Bilinmeyen Bir Hata Olustu')}
-                }else{ Alert.alert('Hata', 'Lütfen geçerli bir Url giriniz.')}
-            }else{Alert.alert('Hata', 'Lüften en az 6 karakterli bir kullanıcı adı giriniz')}
-        }else{Alert.alert('Bir hata oluştu', 'Lütfen adınızı giriniz')}
-    }
+        if(1===1) {
+            try {
+                firestore()
+                .collection('userList')
+                .doc(phone)
+                .set({
+                    phoneNumber:phone,
+                    name:name,
+                    sendDate: firestore.FieldValue.serverTimestamp(),
+                })
+                .then(() => {
+                  AsyncStorage.setItem('phoneNumber',phone)
+                  console.log('kayit basarili');
+                  Alert.alert('Basarili', 'Anasayfaya Yonlendiriliyorsunuz')
+                  setTimeout(() => {
+                    navigation.push('Home', {phone:phone})
+                  }, 1000);
+                });
+            } catch (error) {                
+                Alert.alert('Hata', 'Bilinmeyen Bir Hata Olustu')
+            }
+        }
+        else{
+            Alert.alert('Bir hata oluştu', 'Lütfen girdiğiniz bilgileri kontrol ediniz.')
+        }
+      }
 
     return (
-    <ScrollView style={{flex:1, width:Dimensions.get('screen').width}} showsVerticalScrollIndicator={false}>
-        {!ok?       
-        <KeyboardAvoidingView behavior={'height'} style={styles.container} >
+        <ScrollView style={{flex:1, width:Dimensions.get('screen').width}} 
+            showsVerticalScrollIndicator={false}
+        >
+{!ok
+?
+<KeyboardAvoidingView behavior={'height'} style={styles.container} >
             <StatusBar backgroundColor={'#118ab2'}/>
             <View style={styles.header} >
                 <Text style={styles.headerText} >{phone} numaralı cep telefonunuza bir onay kodu gönderdik. Lütfen 5 haneli onay kodunu giriniz. </Text>
             </View>
+
              <TextInput
                 value={authCodeInput}
                 onChangeText={(text)=>setAuthCodeInput(text)}
                 style={styles.textInput}
                 placeholder={'Onay Kodunu giriniz.'}
                 keyboardType={'default'}
+
             />
             <TouchableOpacity style={styles.button}  onPress={()=>authCodeControl()}>
-                <Text style={styles.buttonText}>Devam Et</Text>
+                <Text style={styles.buttonText} >
+                Devam Et
+                </Text>
             </TouchableOpacity>
+            
             <Text style={styles.headerTextDes}>Onay Kodu : {authCode}</Text>
         </KeyboardAvoidingView>
-        :
-        <KeyboardAvoidingView behavior={'height'} style={styles.container} >
+:
+<KeyboardAvoidingView behavior={'height'} style={styles.container} >
             <StatusBar backgroundColor={'#118ab2'}/>
             <View style={styles.header} >
-                <Text style={styles.headerText} >Tebrikler, telefon numaranız onaylanmıştır. Lütfen adınızı, kullanıcı adınızı ve profil resmi urlnizi  giriniz. </Text>
+                <Text style={styles.headerText} >Tebrikler, telefon numaranız onaylanmıştır. Lütfen adınızı giriniz. </Text>
             </View>
-            <TextInput
+
+             <TextInput
                 value={name}
                 onChangeText={(text)=>setName(text)}
                 style={styles.textInput}
                 placeholder={'Adınızı giriniz.'}
-                placeholderTextColor={'#888'}
                 keyboardType={'default'}
-            />
-            <TextInput
-                value={username}
-                onChangeText={(text)=>setUsername(text)}
-                style={styles.textInput}
-                placeholder={'Kullanıcı Adınızı Giriniz'}
-                placeholderTextColor={'#888'}
-                keyboardType={'default'}
-            />
 
-            <TextInput
-                value={photoUrl}
-                onChangeText={(text)=>setPhotoUrl(text)}
-                style={styles.textInput}
-                placeholder={'Profil Fotoğrafı Linkinizi Giriniz'}
-                placeholderTextColor={'#888'}
-                keyboardType={'email-address'}
-                
             />
-            
             <TouchableOpacity style={styles.button}  onPress={()=>Login()}>
-                <Text style={styles.buttonText}>Kaydet</Text>
+                <Text style={styles.buttonText} >
+                Başlat
+                </Text>
             </TouchableOpacity>
         </KeyboardAvoidingView>
 }
-    </ScrollView> 
+        
+        </ScrollView> 
 
     )
 }
@@ -141,7 +130,7 @@ const styles = StyleSheet.create({
         paddingVertical:10,
         paddingHorizontal:10,
         lineHeight:20,
-        height:70
+        height:80
     },
     headerTextDes:{
         fontSize:22,
@@ -156,7 +145,7 @@ const styles = StyleSheet.create({
         borderBottomWidth:0.3, 
         fontSize:12,
         fontWeight:"100",
-        borderColor:'#ccc',
+        borderColor:'#bbb',
         marginHorizontal:10,
         marginVertical:5,
         borderRadius:6,

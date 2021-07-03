@@ -11,7 +11,7 @@ const style = StyleSheet.create({
     borderRadius: definitions.button.radius,
     paddingHorizontal: definitions.layout.gutters.sm,
     paddingVertical: definitions.layout.gutters.xs,
-    fontFamily: 'GoogleSans-Regular',
+    fontFamily: 'moreo',
     letterSpacing: 0.3,
   },
 });

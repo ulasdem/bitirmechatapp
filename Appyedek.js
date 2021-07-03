@@ -1,6 +1,6 @@
 import  React,{useEffect,useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {View, Text, Image, TextInput, SafeAreaView, Dimensions} from 'react-native';
+import {View, Text, Image, TextInput, useColorScheme} from 'react-native';
 import {
   DarkTheme,
   DefaultTheme,
@@ -11,7 +11,6 @@ import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MessagesScreen from './src/screens/messages/Messages';
-import NewMessagesScreen from './src/screens/messages/newMessage';
 import SignIn from './src/screens/login/SignIn';
 import ChatScreen from './src/screens/messages/Chat';
 import LoginScreen from './src/screens/login/LoginScreen';
@@ -48,7 +47,6 @@ const BibLogo = () => {
   return (
     <View style={{flexDirection: 'row'}}>
       <Image
-        // source={require('../../logo.png')}
         source={{
           uri: 'https://i.ibb.co/zPTK7nT/white-logo.png',
         }}
@@ -65,6 +63,7 @@ const BibLogo = () => {
 const screenOptions = {
   headerTitleStyle: {
     fontWeight: 'normal',
+    fontFamily: 'museo',
     fontSize: 19,
   },
   headerTintColor: '#fff',
@@ -97,18 +96,16 @@ const AppStackScreen = () => {
               <Press
                 circle
                 style={{padding: 10}}
-                onPress={null}>
+                onPress={() => navigation.navigate('ContactUserSearchScreen')}>
                 <Icon name={'search'} size={24} color={Colors.light} />
               </Press>
             ),
           })}
         />
-
-        <AppStack.Screen name="New Message" component={NewMessagesScreen}/>
         <AppStack.Screen name="Calls" component={HomeScreen} />
         <AppStack.Screen name="Chat" component={ChatScreen} />
         <AppStack.Screen name="EntryScreen" component={EntryScreen} options={{headerShown:false}} />
-        <AppStack.Screen name="Login" component={LoginScreen}
+        <AppStack.Screen name="Login" component={LoginScreen} 
           options={({route, navigation}) => ({
             title: 'Giriş Yap',
             headerStyle: {
@@ -137,7 +134,6 @@ const AppStackScreen = () => {
                     borderBottomWidth: 1,
                   },
                 ]}>
-                 
                 <HeaderBackButton
                   {...props}
                   onPress={() => props.navigation.goBack()}
@@ -253,7 +249,7 @@ const CallStackScreen = () => {
         component={RecentCallScreen}
         name="Calls"
         options={({route, navigation}) => ({
-          title: 'Aramalar',
+          title: 'Calls',
           headerLeft: () => <BibLogo />,
           headerRight: () => (
             <Press
@@ -318,12 +314,12 @@ const Root = () => {
           let iconSize = 20;
 
           if (route.name === 'Mesajlar') {
-            iconName = 'mail-outline';
+            iconName = 'chatbox-ellipses-outline';
           } else if (route.name === 'Aramalar') {
             iconName = 'call-outline';
           } else if (route.name === 'Ayarlar') {
             iconSize = 20;
-            iconName = 'settings-outline';
+            iconName = 'menu-outline';
           }
           return <Icon name={iconName} size={iconSize} color={color} />;
         },
@@ -333,8 +329,8 @@ const Root = () => {
         inactiveTintColor: Colors.grey,
        // showLabel:false,
         labelStyle: {
-          width:Dimensions.get('screen').width/3,
           paddingTop: 4,
+          fontFamily: 'moreo_bold',
           fontWeight: 'normal',
         },
         keyboardHidesTabBar: true,
