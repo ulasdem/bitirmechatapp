@@ -50,7 +50,7 @@ const BibLogo = () => {
       <Image
         // source={require('../../logo.png')}
         source={{
-          uri: 'https://i.ibb.co/zPTK7nT/white-logo.png',
+          uri: 'https://i.ibb.co/JmNH3bB/logo.png',
         }}
         style={{
           width: 48,

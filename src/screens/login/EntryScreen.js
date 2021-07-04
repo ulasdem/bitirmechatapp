@@ -40,7 +40,7 @@ const getUserInfo=(phoneNumber)=>{
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor={'#118ab2'} />
-            <Image source={{uri:'https://images-na.ssl-images-amazon.com/images/I/A1IA1ZulCoL.png'}} style={{width:200, height:200, marginBottom:15,justifyContent:'center',alignItems:'center'}}  />                
+            <Image source={{uri:'https://i.ibb.co/cyzrt3n/applogo.png'}} style={{width:200, height:200, marginBottom:15,justifyContent:'center',alignItems:'center'}}  />                
         </View>
     )
 }

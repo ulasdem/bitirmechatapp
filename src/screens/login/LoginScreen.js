@@ -12,7 +12,7 @@ import gStyles from '../../styles/gStyles';
 
 export default function LoginScreen({navigation,route}) {
 
-    const  [phoneNumber,setPhoneNumber]=useState("05432883519")
+    const  [phoneNumber,setPhoneNumber]=useState()
     const [authCode,setAuthCode]=useState(Math.floor(Math.random()*10000)+10000)
     
     const setAuth = () =>{
@@ -69,7 +69,7 @@ export default function LoginScreen({navigation,route}) {
         <KeyboardAvoidingView behavior={'height'} style={styles.container} >
             <StatusBar backgroundColor={'#118ab2'}/>
             <View style={styles.header} >
-                <Image source={{uri:'https://images-na.ssl-images-amazon.com/images/I/A1IA1ZulCoL.png'}} style={{width:90, height:90, marginBottom:15}}  />                
+                <Image source={{uri:'https://i.ibb.co/cyzrt3n/applogo.png'}} style={{width:90, height:90, marginBottom:15}}  />                
                 <Text style={styles.headerText} >UUD-Chat</Text>
                 <Text style={styles.headerTextDes} >Güvenli sohbet </Text>
             </View>
